@@ -1,5 +1,5 @@
 figma.showUI(__html__, {
-    height: 400,
+    height: 300,
 });
 
 figma.loadFontAsync({family: 'Roboto', style: 'Regular'});
@@ -30,7 +30,7 @@ figma.ui.onmessage = msg => {
             rootFrame.layoutMode = msg.state.direction;
             rootFrame.primaryAxisSizingMode = 'AUTO';
             rootFrame.counterAxisSizingMode = 'AUTO';
-            rootFrame.itemSpacing = +msg.state.groupSpace;
+            rootFrame.itemSpacing = +msg.state.margin;
 
             let maxGranularity = 0;
             let frames = [];
@@ -51,9 +51,9 @@ figma.ui.onmessage = msg => {
             });
 
             if (msg.state.granularity > maxGranularity) {
-                frames = getFrames(componentData, maxGranularity);
+                frames = getFrames(componentData, maxGranularity, msg.state.renameDuplicate);
             } else {
-                frames = getFrames(componentData, msg.state.granularity);
+                frames = getFrames(componentData, msg.state.granularity, msg.state.renameDuplicate);
             }
 
             frames.forEach(frame => {
@@ -65,9 +65,8 @@ figma.ui.onmessage = msg => {
                 rootFrame.appendChild(set);
             });
 
-            let titles;
             if (msg.state.displayTitle) {
-                titles = createTitles(rootFrame, msg.state);
+                createTitles(rootFrame, msg.state);
             }
             if (msg.state.zoomCenter) {
                 figma.viewport.scrollAndZoomIntoView([rootFrame]);
@@ -109,7 +108,6 @@ async function createTitles(rootFrame, state) {
 
     let titleGroup = figma.group(titles, figma.currentPage);
     titleGroup.name = 'Component-Organizer-Titles';
-    return titleGroup;
 }
 
 function renameOldFrames() {
@@ -146,10 +144,10 @@ function layoutFrame(frame, state) {
     frame.layoutMode = state.direction === 'VERTICAL' ? 'HORIZONTAL' : 'VERTICAL';
     frame.primaryAxisSizingMode = 'AUTO';
     frame.counterAxisSizingMode = 'AUTO';
-    frame.itemSpacing = state.direction === 'VERTICAL' ? +state.spacing.x : +state.spacing.y;
+    frame.itemSpacing = state.gutter;
 }
 
-function getFrames(components, granularity) {
+function getFrames(components, granularity, renameDuplicate) {
     let frameNames = [];
     components.forEach(component => {
         let name = joinName(component.splitName, granularity);
@@ -161,11 +159,17 @@ function getFrames(components, granularity) {
     let frames = [];
     frameNames.forEach(frameName => {
         let frameNodes = [];
+        let nodeNames = [];
         let regex = RegExp(`^${frameName}`);
 
         components.forEach(component => {
             if (regex.test(component.name)) {
                 let node = figma.getNodeById(component.id);
+
+                if (renameDuplicate) {
+                    checkForDuplicates(node, nodeNames);
+                }
+
                 frameNodes.push(node);
             }
         });
@@ -177,22 +181,24 @@ function getFrames(components, granularity) {
             frame.appendChild(node);
         });
 
-        // const fill: SolidPaint = {
-        //     opacity: 0,
-        //     type: 'SOLID',
-        //     color: {
-        //         r: 0,
-        //         g: 0,
-        //         b: 0,
-        //     },
-        // };
-
-        // frame.fills = [fill];
-
         frames.push(frame);
     });
 
     return frames;
+}
+
+function checkForDuplicates(node, nameArray) {
+    if (nameArray.includes(node.name)) {
+        if (node.name.includes('Copy')) {
+            let copyNum = parseInt(node.name.substring(node.name.length - 1)) + 1;
+            node.name = node.name.substring(0, node.name.length - 1) + copyNum;
+        } else {
+            node.name = node.name + ' Copy 1';
+        }
+        checkForDuplicates(node, nameArray);
+    } else {
+        nameArray.push(node.name);
+    }
 }
 
 function joinName(splitName, granularity) {

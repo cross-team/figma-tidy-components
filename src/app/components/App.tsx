@@ -8,12 +8,9 @@ declare function require(path: string): any;
 const defaultSettings = {
     granularity: 1,
     direction: 'VERTICAL',
-    groupSpace: 100,
+    margin: 100,
+    gutter: 100,
     displayTitle: true,
-    spacing: {
-        x: 100,
-        y: 100,
-    },
     renameDuplicate: false,
     zoomCenter: true,
 };
@@ -37,27 +34,6 @@ const App = ({}) => {
             ...state,
             [name]: event,
         });
-    }
-
-    function handleSpacingChange(event, axis) {
-        // console.log(event);
-        if (axis === 'x') {
-            setState({
-                ...state,
-                spacing: {
-                    x: event,
-                    y: state.spacing.y,
-                },
-            });
-        } else {
-            setState({
-                ...state,
-                spacing: {
-                    y: event,
-                    x: state.spacing.x,
-                },
-            });
-        }
     }
 
     function handleSelectChange(event, name) {
@@ -89,15 +65,15 @@ const App = ({}) => {
                         ]}
                         defaultValue={defaultSettings.direction}
                     />
-                    <Label htmlFor="spaceX">Spacing X</Label>
+                    <Label htmlFor="margin">Margin</Label>
                     <Input
                         type="number"
-                        name="spaceX"
-                        id="spaceX"
+                        name="margin"
+                        id="margin"
                         onChange={e => {
-                            handleChange(e, 'x');
+                            handleChange(e, 'margin');
                         }}
-                        defaultValue={defaultSettings.spacing.x}
+                        defaultValue={defaultSettings.margin}
                     />
                 </div>
                 <div className="column">
@@ -111,29 +87,18 @@ const App = ({}) => {
                         }}
                         defaultValue={defaultSettings.granularity}
                     />
-                    <Label htmlFor="spaceY">Spacing Y</Label>
+                    <Label htmlFor="gutter">Gutter</Label>
                     <Input
                         type="number"
-                        name="spaceY"
-                        id="spaceY"
+                        name="gutter"
+                        id="gutter"
                         onChange={e => {
-                            handleSpacingChange(e, 'y');
+                            handleChange(e, 'margin');
                         }}
-                        defaultValue={defaultSettings.spacing.y}
+                        defaultValue={defaultSettings.margin}
                     />
                 </div>
             </div>
-
-            <Label htmlFor="groupSpace">Group Space</Label>
-            <Input
-                type="number"
-                name="groupSpace"
-                id="groupSpace"
-                onChange={e => {
-                    handleChange(e, 'groupSpace');
-                }}
-                defaultValue={defaultSettings.groupSpace}
-            />
             <Checkbox
                 name="displayTitle"
                 id="displayTitle"
@@ -165,13 +130,13 @@ const App = ({}) => {
                 defaultValue={defaultSettings.zoomCenter}
             />
             <Button onClick={handleSubmit}>Submit</Button>
-            <Button
+            {/* <Button
                 onClick={() => {
                     parent.postMessage({pluginMessage: {type: 'showSelection'}}, '*');
                 }}
             >
                 Show Selection
-            </Button>
+            </Button> */}
         </div>
     );
 };
