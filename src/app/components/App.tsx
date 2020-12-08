@@ -5,23 +5,26 @@ import 'react-figma-plugin-ds/figma-plugin-ds.css';
 
 declare function require(path: string): any;
 
+const defaultSettings = {
+    granularity: 1,
+    direction: 'VERTICAL',
+    groupSpace: 100,
+    displayTitle: true,
+    spacing: {
+        x: 100,
+        y: 100,
+    },
+    renameDuplicate: false,
+    zoomCenter: true,
+};
+
 const App = ({}) => {
     const [state, setState] = React.useState({
-        granularity: 1,
-        direction: 'VERTICAL',
-        groupSpace: 100,
-        displayTitle: true,
-        spacing: {
-            x: 100,
-            y: 100,
-        },
-        rowMax: '',
-        renameDuplicate: false,
-        zoomCenter: true,
+        ...defaultSettings,
     });
 
     React.useEffect(() => {
-        // console.log(state);
+        console.log(state);
     }, [state]);
 
     // function launchControllerFunctions(messageType) {
@@ -58,7 +61,7 @@ const App = ({}) => {
     }
 
     function handleSelectChange(event, name) {
-        // console.log(event);
+        console.log(event);
         setState({
             ...state,
             [name]: event.value,
@@ -70,30 +73,57 @@ const App = ({}) => {
     }
 
     return (
-        <form id="root">
-            <Label htmlFor="granularity">Group Granularity</Label>
-            <Input
-                type="number"
-                name="granularity"
-                id="granularity"
-                onChange={e => {
-                    handleChange(e, 'granularity');
-                }}
-                defaultValue={1}
-            />
-            <Label htmlFor="direction">Direction</Label>
-            <Select
-                name="direction"
-                id="direction"
-                onChange={e => {
-                    handleSelectChange(e, 'direction');
-                }}
-                options={[
-                    {value: 'VERTICAL', label: 'Vertical'},
-                    {value: 'HORIZONTAL', label: 'Horizontal'},
-                ]}
-                defaultValue="VERTICAL"
-            />
+        <div id="root">
+            <div className="columnContainer">
+                <div className="column">
+                    <Label htmlFor="direction">Direction</Label>
+                    <Select
+                        name="direction"
+                        id="direction"
+                        onChange={e => {
+                            handleSelectChange(e, 'direction');
+                        }}
+                        options={[
+                            {value: 'VERTICAL', label: 'Vertical'},
+                            {value: 'HORIZONTAL', label: 'Horizontal'},
+                        ]}
+                        defaultValue={defaultSettings.direction}
+                    />
+                    <Label htmlFor="spaceX">Spacing X</Label>
+                    <Input
+                        type="number"
+                        name="spaceX"
+                        id="spaceX"
+                        onChange={e => {
+                            handleChange(e, 'x');
+                        }}
+                        defaultValue={defaultSettings.spacing.x}
+                    />
+                </div>
+                <div className="column">
+                    <Label htmlFor="granularity">Group Granularity</Label>
+                    <Input
+                        type="number"
+                        name="granularity"
+                        id="granularity"
+                        onChange={e => {
+                            handleChange(e, 'granularity');
+                        }}
+                        defaultValue={defaultSettings.granularity}
+                    />
+                    <Label htmlFor="spaceY">Spacing Y</Label>
+                    <Input
+                        type="number"
+                        name="spaceY"
+                        id="spaceY"
+                        onChange={e => {
+                            handleSpacingChange(e, 'y');
+                        }}
+                        defaultValue={defaultSettings.spacing.y}
+                    />
+                </div>
+            </div>
+
             <Label htmlFor="groupSpace">Group Space</Label>
             <Input
                 type="number"
@@ -102,37 +132,7 @@ const App = ({}) => {
                 onChange={e => {
                     handleChange(e, 'groupSpace');
                 }}
-                defaultValue={100}
-            />
-            <Label htmlFor="spaceX">Spacing X</Label>
-            <Input
-                type="number"
-                name="spaceX"
-                id="spaceX"
-                onChange={e => {
-                    handleChange(e, 'x');
-                }}
-                defaultValue={100}
-            />
-            <Label htmlFor="spaceY">Spacing Y</Label>
-            <Input
-                type="number"
-                name="spaceY"
-                id="spaceY"
-                onChange={e => {
-                    handleSpacingChange(e, 'y');
-                }}
-                defaultValue={100}
-            />
-            <Label htmlFor="rowMax">Maximum Rows</Label>
-            <Input
-                type="number"
-                name="rowMax"
-                id="rowMax"
-                onChange={e => {
-                    handleChange(e, 'rowMax');
-                }}
-                defaultValue={100}
+                defaultValue={defaultSettings.groupSpace}
             />
             <Checkbox
                 name="displayTitle"
@@ -142,6 +142,7 @@ const App = ({}) => {
                     handleChange(e, 'displayTitle');
                 }}
                 type="checkbox"
+                defaultValue={defaultSettings.displayTitle}
             />
             <Checkbox
                 name="renameDuplicate"
@@ -151,6 +152,7 @@ const App = ({}) => {
                     handleChange(e, 'renameDuplicate');
                 }}
                 type="checkbox"
+                defaultValue={defaultSettings.renameDuplicate}
             />
             <Checkbox
                 name="zoomCenter"
@@ -160,6 +162,7 @@ const App = ({}) => {
                     handleChange(e, 'zoomCenter');
                 }}
                 type="checkbox"
+                defaultValue={defaultSettings.zoomCenter}
             />
             <Button onClick={handleSubmit}>Submit</Button>
             <Button
@@ -169,7 +172,7 @@ const App = ({}) => {
             >
                 Show Selection
             </Button>
-        </form>
+        </div>
     );
 };
 

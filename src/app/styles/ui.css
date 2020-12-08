@@ -8,3 +8,15 @@
 #root div {
     width: 100%;
 }
+
+.columnContainer {
+    width: 100%;
+    display: flex;
+}
+
+.column {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
