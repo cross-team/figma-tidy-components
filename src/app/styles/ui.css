@@ -20,3 +20,28 @@
     flex-direction: column;
     align-items: center;
 }
+
+.tooltipIcon {
+    height: 16px;
+    width: 16px;
+    margin-left: 0.5rem;
+}
+
+.tooltip {
+    width: 175px !important;
+    background-color: #b2b2b2;
+    color: white;
+    padding: 0.25rem;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.visually-hidden {
+    clip-path: inset(100%);
+    clip: rect(1px, 1px, 1px, 1px);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+}

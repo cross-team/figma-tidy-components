@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {Button, Checkbox, Input, Label, Select} from 'react-figma-plugin-ds';
+import InfoTooltip from './InfoTooltip';
 import '../styles/ui.css';
 import 'react-figma-plugin-ds/figma-plugin-ds.css';
 
@@ -11,6 +12,7 @@ const defaultSettings = {
     margin: 100,
     gutter: 100,
     displayTitle: true,
+    sortAlphabetically: false,
     renameDuplicate: false,
     zoomCenter: true,
 };
@@ -52,7 +54,14 @@ const App = ({}) => {
         <div id="root">
             <div className="columnContainer">
                 <div className="column">
-                    <Label htmlFor="direction">Direction</Label>
+                    <Label className="big" htmlFor="direction">
+                        Direction
+                        <InfoTooltip
+                            alt="Direction"
+                            id="direction"
+                            description="The direction in which the component groups will be laid out"
+                        />
+                    </Label>
                     <Select
                         name="direction"
                         id="direction"
@@ -65,7 +74,14 @@ const App = ({}) => {
                         ]}
                         defaultValue={defaultSettings.direction}
                     />
-                    <Label htmlFor="margin">Margin</Label>
+                    <Label htmlFor="margin">
+                        Margin
+                        <InfoTooltip
+                            alt="Margin"
+                            id="margin"
+                            description="The space between each group of components"
+                        />
+                    </Label>
                     <Input
                         type="number"
                         name="margin"
@@ -77,7 +93,14 @@ const App = ({}) => {
                     />
                 </div>
                 <div className="column">
-                    <Label htmlFor="granularity">Group Granularity</Label>
+                    <Label htmlFor="granularity">
+                        Group Granularity
+                        <InfoTooltip
+                            alt="Group Granularity"
+                            id="granularity"
+                            description="How deep the component separation should go. 1 is the least specific and the higher the number, the more specific the groups will be until there is one component in each group."
+                        />
+                    </Label>
                     <Input
                         type="number"
                         name="granularity"
@@ -87,7 +110,14 @@ const App = ({}) => {
                         }}
                         defaultValue={defaultSettings.granularity}
                     />
-                    <Label htmlFor="gutter">Gutter</Label>
+                    <Label htmlFor="gutter">
+                        Gutter
+                        <InfoTooltip
+                            alt="Gutter"
+                            id="gutter"
+                            description="The space between each component in the groups"
+                        />
+                    </Label>
                     <Input
                         type="number"
                         name="gutter"
@@ -128,6 +158,16 @@ const App = ({}) => {
                 }}
                 type="checkbox"
                 defaultValue={defaultSettings.zoomCenter}
+            />
+            <Checkbox
+                name="sortAlphabetically"
+                id="sortAlphabetically"
+                label="Sort Alphabetically"
+                onChange={e => {
+                    handleChange(e, 'sortAlphabetically');
+                }}
+                type="checkbox"
+                defaultValue={defaultSettings.sortAlphabetically}
             />
             <Button onClick={handleSubmit}>Submit</Button>
             {/* <Button

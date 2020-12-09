@@ -1,5 +1,5 @@
 figma.showUI(__html__, {
-    height: 300,
+    height: 320,
 });
 
 figma.loadFontAsync({family: 'Roboto', style: 'Regular'});
@@ -24,6 +24,12 @@ figma.ui.onmessage = msg => {
             let componentSets = figma.currentPage.findAll(node => {
                 return node.type === 'COMPONENT_SET';
             });
+
+            if (msg.state.sortAlphabetically) {
+                components.sort(compareNodes);
+                componentSets.sort(compareNodes);
+            }
+
             renameOldFrames();
             rootFrame.name = 'Component-Organizer-Root';
             rootFrame.fills = [clearFill];
@@ -54,6 +60,10 @@ figma.ui.onmessage = msg => {
                 frames = getFrames(componentData, maxGranularity, msg.state.renameDuplicate);
             } else {
                 frames = getFrames(componentData, msg.state.granularity, msg.state.renameDuplicate);
+            }
+
+            if (msg.state.sortAlphabetically) {
+                frames.sort(compareNodes);
             }
 
             frames.forEach(frame => {
@@ -207,4 +217,14 @@ function joinName(splitName, granularity) {
         nameArray.pop();
     }
     return nameArray.join('/');
+}
+
+function compareNodes(a, b) {
+    if (a.name < b.name) {
+        return -1;
+    }
+    if (a.name > b.name) {
+        return 1;
+    }
+    return 0;
 }

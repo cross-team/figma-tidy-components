@@ -9,6 +9,7 @@
 		"prettier:format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,json}' "
 	},
 	"dependencies": {
+		"@bit/reactstrap.reactstrap.tooltip": "^8.4.1",
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1",
 		"react-figma-plugin-ds": "^2.0.5"
