@@ -1,11 +1,19 @@
 #root {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#body {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 1rem;
 }
 
-#root div {
+#body div {
     width: 100%;
 }
 
@@ -22,16 +30,17 @@
 }
 
 .tooltipIcon {
-    height: 16px;
-    width: 16px;
+    height: 12px;
+    width: 12px;
     margin-left: 0.5rem;
+    fill: #666;
 }
 
 .tooltip {
     width: 175px !important;
-    background-color: #b2b2b2;
+    background-color: #333;
     color: white;
-    padding: 0.25rem;
+    padding: 0.5rem;
     border-radius: 4px;
     font-size: 12px;
 }
@@ -44,4 +53,35 @@
     position: absolute;
     white-space: nowrap;
     width: 1px;
+}
+
+.label {
+    font-weight: bold !important;
+    color: #666 !important;
+}
+
+button {
+    margin: 0.5rem;
+}
+
+.footer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 16px;
+    color: #666;
+}
+
+.ghIcon {
+    height: 16px;
+    width: 16px;
+    margin-left: 0.25rem;
+}
+
+.ghLink {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #666;
 }

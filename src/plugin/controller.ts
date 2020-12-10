@@ -1,5 +1,5 @@
 figma.showUI(__html__, {
-    height: 320,
+    height: 400,
 });
 
 figma.loadFontAsync({family: 'Roboto', style: 'Regular'});

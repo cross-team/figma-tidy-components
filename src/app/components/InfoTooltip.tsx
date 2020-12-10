@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Tooltip from '@bit/reactstrap.reactstrap.tooltip';
+import Icon from '../assets/info-circle';
 
 const InfoTooltip = ({alt, id, description}) => {
     const [show, setShow] = React.useState(false);
@@ -10,14 +11,7 @@ const InfoTooltip = ({alt, id, description}) => {
 
     return (
         <>
-            <img
-                id={`${id}-icon`}
-                className="tooltipIcon"
-                src={require('../assets/info-circle.svg')}
-                alt={`${alt} Tooltip`}
-                onMouseEnter={() => setShow(true)}
-                onMouseLeave={() => setShow(false)}
-            />
+            <Icon id={`${id}-icon`} alt={`${alt} Tooltip`} enter={() => setShow(true)} leave={() => setShow(false)} />
             <Tooltip placement="right" target={`${id}-icon`} isOpen={show}>
                 {description}
             </Tooltip>

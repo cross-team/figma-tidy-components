@@ -1,6 +1,7 @@
 import * as React from 'react';
-import {Button, Checkbox, Input, Label, Select} from 'react-figma-plugin-ds';
+import {Button, Checkbox, Input, Label, Select, Text} from 'react-figma-plugin-ds';
 import InfoTooltip from './InfoTooltip';
+import GithubIcon from '../assets/github';
 import '../styles/ui.css';
 import 'react-figma-plugin-ds/figma-plugin-ds.css';
 
@@ -23,19 +24,27 @@ const App = ({}) => {
     });
 
     React.useEffect(() => {
-        console.log(state);
-    }, [state]);
+        setTimeout(() => {
+            console.log(document.getElementById('granularity'));
+        }, 1000);
+    }, []);
 
     // function launchControllerFunctions(messageType) {
     //     parent.postMessage({pluginMessage: {type: messageType}}, '*');
     // }
 
     function handleChange(event, name) {
-        // console.log(event);
-        setState({
-            ...state,
-            [name]: event,
-        });
+        if (name === 'granularity' && event < 1) {
+            setState({
+                ...state,
+                [name]: 1,
+            });
+        } else {
+            setState({
+                ...state,
+                [name]: event,
+            });
+        }
     }
 
     function handleSelectChange(event, name) {
@@ -52,131 +61,145 @@ const App = ({}) => {
 
     return (
         <div id="root">
-            <div className="columnContainer">
-                <div className="column">
-                    <Label className="big" htmlFor="direction">
-                        Direction
-                        <InfoTooltip
-                            alt="Direction"
+            <div id="body">
+                <div className="columnContainer">
+                    <div className="column">
+                        <Label htmlFor="direction">
+                            Direction
+                            <InfoTooltip
+                                alt="Direction"
+                                id="direction"
+                                description="The direction in which the component groups will be laid out."
+                            />
+                        </Label>
+                        <Select
+                            name="direction"
                             id="direction"
-                            description="The direction in which the component groups will be laid out"
+                            onChange={e => {
+                                handleSelectChange(e, 'direction');
+                            }}
+                            options={[
+                                {value: 'VERTICAL', label: 'Vertical'},
+                                {value: 'HORIZONTAL', label: 'Horizontal'},
+                            ]}
+                            defaultValue={defaultSettings.direction}
                         />
-                    </Label>
-                    <Select
-                        name="direction"
-                        id="direction"
-                        onChange={e => {
-                            handleSelectChange(e, 'direction');
-                        }}
-                        options={[
-                            {value: 'VERTICAL', label: 'Vertical'},
-                            {value: 'HORIZONTAL', label: 'Horizontal'},
-                        ]}
-                        defaultValue={defaultSettings.direction}
-                    />
-                    <Label htmlFor="margin">
-                        Margin
-                        <InfoTooltip
-                            alt="Margin"
+                        <Label htmlFor="margin">
+                            Margin
+                            <InfoTooltip
+                                alt="Margin"
+                                id="margin"
+                                description="The space between each group of components."
+                            />
+                        </Label>
+                        <Input
+                            type="number"
+                            name="margin"
                             id="margin"
-                            description="The space between each group of components"
+                            onChange={e => {
+                                handleChange(e, 'margin');
+                            }}
+                            defaultValue={defaultSettings.margin}
                         />
-                    </Label>
-                    <Input
-                        type="number"
-                        name="margin"
-                        id="margin"
-                        onChange={e => {
-                            handleChange(e, 'margin');
-                        }}
-                        defaultValue={defaultSettings.margin}
-                    />
-                </div>
-                <div className="column">
-                    <Label htmlFor="granularity">
-                        Group Granularity
-                        <InfoTooltip
-                            alt="Group Granularity"
+                    </div>
+                    <div className="column">
+                        <Label htmlFor="granularity">
+                            Group Granularity
+                            <InfoTooltip
+                                alt="Group Granularity"
+                                id="granularity"
+                                description="The hierarchy levels in which your components will be organized."
+                            />
+                        </Label>
+                        <Input
+                            type="number"
+                            name="granularity"
                             id="granularity"
-                            description="How deep the component separation should go. 1 is the least specific and the higher the number, the more specific the groups will be until there is one component in each group."
+                            onChange={e => {
+                                handleChange(e, 'granularity');
+                            }}
+                            defaultValue={defaultSettings.granularity}
                         />
-                    </Label>
-                    <Input
-                        type="number"
-                        name="granularity"
-                        id="granularity"
-                        onChange={e => {
-                            handleChange(e, 'granularity');
-                        }}
-                        defaultValue={defaultSettings.granularity}
-                    />
-                    <Label htmlFor="gutter">
-                        Gutter
-                        <InfoTooltip
-                            alt="Gutter"
+                        <Label htmlFor="gutter">
+                            Gutter
+                            <InfoTooltip
+                                alt="Gutter"
+                                id="gutter"
+                                description="The space between each component inside the groups."
+                            />
+                        </Label>
+                        <Input
+                            type="number"
+                            name="gutter"
                             id="gutter"
-                            description="The space between each component in the groups"
+                            onChange={e => {
+                                handleChange(e, 'margin');
+                            }}
+                            defaultValue={defaultSettings.margin}
                         />
-                    </Label>
-                    <Input
-                        type="number"
-                        name="gutter"
-                        id="gutter"
-                        onChange={e => {
-                            handleChange(e, 'margin');
-                        }}
-                        defaultValue={defaultSettings.margin}
-                    />
+                    </div>
                 </div>
-            </div>
-            <Checkbox
-                name="displayTitle"
-                id="displayTitle"
-                label="Display Title"
-                onChange={e => {
-                    handleChange(e, 'displayTitle');
-                }}
-                type="checkbox"
-                defaultValue={defaultSettings.displayTitle}
-            />
-            <Checkbox
-                name="renameDuplicate"
-                id="renameDuplicate"
-                label="Rename Duplicate Components"
-                onChange={e => {
-                    handleChange(e, 'renameDuplicate');
-                }}
-                type="checkbox"
-                defaultValue={defaultSettings.renameDuplicate}
-            />
-            <Checkbox
-                name="zoomCenter"
-                id="zoomCenter"
-                label="Zoom to Center"
-                onChange={e => {
-                    handleChange(e, 'zoomCenter');
-                }}
-                type="checkbox"
-                defaultValue={defaultSettings.zoomCenter}
-            />
-            <Checkbox
-                name="sortAlphabetically"
-                id="sortAlphabetically"
-                label="Sort Alphabetically"
-                onChange={e => {
-                    handleChange(e, 'sortAlphabetically');
-                }}
-                type="checkbox"
-                defaultValue={defaultSettings.sortAlphabetically}
-            />
-            <Button onClick={handleSubmit}>Submit</Button>
-            {/* <Button
+                <Checkbox
+                    name="displayTitle"
+                    id="displayTitle"
+                    label="Display Title"
+                    onChange={e => {
+                        handleChange(e, 'displayTitle');
+                    }}
+                    type="checkbox"
+                    defaultValue={defaultSettings.displayTitle}
+                />
+                <Checkbox
+                    name="renameDuplicate"
+                    id="renameDuplicate"
+                    label="Rename Duplicate Components"
+                    onChange={e => {
+                        handleChange(e, 'renameDuplicate');
+                    }}
+                    type="checkbox"
+                    defaultValue={defaultSettings.renameDuplicate}
+                />
+                <Checkbox
+                    name="zoomCenter"
+                    id="zoomCenter"
+                    label="Zoom to Center"
+                    onChange={e => {
+                        handleChange(e, 'zoomCenter');
+                    }}
+                    type="checkbox"
+                    defaultValue={defaultSettings.zoomCenter}
+                />
+                <Checkbox
+                    name="sortAlphabetically"
+                    id="sortAlphabetically"
+                    label="Sort Alphabetically"
+                    onChange={e => {
+                        handleChange(e, 'sortAlphabetically');
+                    }}
+                    type="checkbox"
+                    defaultValue={defaultSettings.sortAlphabetically}
+                />
+                <Button onClick={handleSubmit}>Submit</Button>
+                {/* <Button
                 onClick={() => {
                     parent.postMessage({pluginMessage: {type: 'showSelection'}}, '*');
                 }}
             >
                 Show Selection
             </Button> */}
+            </div>
+            <div className="footer">
+                <Text>Version 1.0</Text>
+                <a
+                    className="ghLink"
+                    href="https://github.com/MarcelloPaiva/figma-component-organizer"
+                    target="_blank"
+                    rel="noreferrer"
+                >
+                    <Text>Feedback / Issues</Text>
+                    <GithubIcon />
+                </a>
+            </div>
         </div>
     );
 };
