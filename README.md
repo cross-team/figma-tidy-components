@@ -1,6 +1,6 @@
 # Tidy Components
 
-Tidy Components is a Figma Plugin that you can use to organize all of the components and component sets on your figma page in a tidy manner
+Tidy Components is a Figma plugin that you can use to organize all of the components and component sets on your Figma page in a tidy manner
 
 ## How to Use
 
