@@ -24,11 +24,11 @@ When you first open the plugin, you are presented with a set of pre-defined para
 
 ## Found a bug or have an idea?
 
-This is a team of **one**, but if you have any good ideas or constructive feedback, please do not hesitate to share them in the issues page - screen captures are welcomed.
+This is a team of **one**, but if you have any good ideas or constructive feedback, please do not hesitate to share your thoughts [by creating a new issue](https://github.com/cross-team/figma-tidy-components/issues/new) - screen captures are welcomed.
 
-[Submit your feedback](https://github.com/cross-team/figma-tidy-components/issues/new)
+## Show your support
 
-Or you can [buy me a 🍺](https://www.patreon.com/mpaiva) at my Patreon page. Thanks! 🙏
+If you find this plugin useful, feel free to [buy me a 🍺](https://www.patreon.com/mpaiva) at my Patreon page. Thanks! 🙏
  
 ## Contribute
 - Run `yarn` to install dependencies.
