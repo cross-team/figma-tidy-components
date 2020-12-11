@@ -104,7 +104,7 @@ const App = ({}) => {
                     </div>
                     <div className="column">
                         <Label htmlFor="granularity">
-                            Group Granularity
+                            Levels
                             <InfoTooltip
                                 alt="Group Granularity"
                                 id="granularity"
@@ -152,7 +152,7 @@ const App = ({}) => {
                 <Checkbox
                     name="renameDuplicate"
                     id="renameDuplicate"
-                    label="Rename Duplicate Components"
+                    label="Rename Duplicates"
                     onChange={e => {
                         handleChange(e, 'renameDuplicate');
                     }}
