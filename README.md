@@ -17,14 +17,14 @@ When you first open the plugin, you are presented with a set of pre-defined para
 
 | Parameter | Description | Value |
 |----------|-------------|------|
-| `Direction` | The direction in which the components groups will be laid out. | _Horizontal_, Vertical |
+| `Direction` | The direction in which the component groups will be laid out. | _Horizontal_, Vertical |
 | `Levels` | The hierarchy levels in which your components will be organized. | 1 to 100 |
 | `Margin` | Distance between each group. | Number in pixels |
 | `Gutter` | Distance between each component. | Number in pixels |
-| `Display Title` | The parent category name will be displayed before of each group. | _checked_, unchecked |
-| `Rename duplicates` | If multiple components have the exact same name, they will be renamed with incremental numbers. | checked, _unchecked_ |
-| `Zoom to center` | After cleaning up your 💩, view will zoom out to show all components. | _checked_, unchecked |
-| `Sort alphabetically` | Tidy will sort your components and variants alphabetically. | checked, _unchecked_ |
+| `Display Title` | The parent category name that will be displayed before each group. | _checked_, unchecked |
+| `Rename Duplicates` | If multiple components have the exact same name, they will be renamed with incremental numbers. | checked, _unchecked_ |
+| `Zoom to Center` | After cleaning up your 💩, view will zoom out to show all components. | _checked_, unchecked |
+| `Sort Alphabetically` | Tidy will sort your components and variants alphabetically. | checked, _unchecked_ |
 
 ## Found a bug or have an idea?
 
